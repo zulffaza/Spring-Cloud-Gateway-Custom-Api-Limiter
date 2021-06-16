@@ -25,6 +25,10 @@ public class ApiRateLimiterKeyResolver implements KeyResolver {
               .value(), 
           exchange.getRequest()
               .getMethodValue())
+        .doOnNext(apiLimiter -> apiLimiter.setPath(
+            exchange.getRequest()
+                .getPath()
+                .value()))
         .map(objectHelper::toStringBase64);
   }
 }
